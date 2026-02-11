@@ -1,56 +1,89 @@
 
-// Import React to resolve the 'React' namespace error for React.ReactNode
 import React from 'react';
 
-export type AppView = 'home' | 'documents' | 'images' | 'compress' | 'resize' | 'help';
-
-export enum FileCategory {
-  IMAGE = 'IMAGE',
-  DOCUMENT = 'DOCUMENT',
-  OTHER = 'OTHER'
+export enum ToolType {
+  MERGE = 'merge',
+  SPLIT = 'split',
+  COMPRESS = 'compress',
+  REORDER = 'reorder',
+  EDITOR = 'editor',
+  ROTATE = 'rotate'
 }
 
-export interface FileBase {
+export type ToolStep = 'upload' | 'configure' | 'complete';
+
+export type AnnotationType = 'text' | 'draw' | 'highlight' | 'image' | 'textBlock';
+
+export interface Annotation {
+  id: string;
+  type: AnnotationType;
+  x: number;
+  y: number;
+  width?: number;
+  height?: number;
+  content?: string; 
+  color: string;
+  fontSize?: number;
+  fontFamily?: string;
+  strokeWidth?: number;
+  rotation?: number;
+  opacity?: number;
+  align?: 'left' | 'center' | 'right';
+  isBold?: boolean;
+  points?: { x: number; y: number }[]; 
+  rects?: { x: number; y: number; width: number; height: number }[]; // For multi-line highlights
+  src?: string; // Base64 for images
+  isHeadline?: boolean; // Heuristic for smart editing
+  originalText?: string; // To track if content changed
+}
+
+export interface CropBox {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+export interface BackgroundConfig {
+  color?: string;
+  image?: string; // base64
+}
+
+export interface PageOp {
+  id: string; 
+  index: number; 
+  rotation: number;
+  deleted: boolean;
+  crop?: CropBox;
+  background?: BackgroundConfig;
+}
+
+export interface PDFFile {
   id: string;
   file: File;
-  name: string;
-  size: number;
-  mimeType: string;
-  status: 'pending' | 'processing' | 'completed' | 'error';
-  progress: number;
-  convertedUrl: string | null;
-  compressedSize?: number; 
-}
-
-export interface DocumentFileData extends FileBase {
-  category: FileCategory.DOCUMENT;
+  previewUrl?: string;
   pageCount?: number;
-  previewUrl: string | null;
-  targetFormat: 'PDF' | 'DOCX' | 'TXT' | 'HTML';
-  compressionLevel?: 'low' | 'medium' | 'high' | 'custom';
-  customCompressionValue?: number; 
 }
 
-export interface ImageFileData extends FileBase {
-  category: FileCategory.IMAGE;
-  previewUrl: string | null;
-  originalDimensions?: { width: number; height: number };
-  targetFormat: 'JPG' | 'PNG' | 'WEBP' | 'SVG' | 'AVIF' | 'BMP' | 'TIFF' | 'GIF' | 'ICO';
-  settings: {
-    width: number;
-    height: number;
-    quality: number;
-    maintainAspectRatio: boolean;
-    dpi: number;
-    colorProfile: 'sRGB' | 'AdobeRGB' | 'DisplayP3' | 'Grayscale';
-  };
-}
-
-export type FileData = DocumentFileData | ImageFileData;
-
-export interface TourStep {
+export interface ToolConfig {
+  id: ToolType;
   title: string;
-  content: string;
+  description: string;
   icon: React.ReactNode;
-  target?: string;
+  path: string;
+  seoTitle: string;
+  keywords: string[];
+}
+
+export interface RecentTool {
+  id: ToolType;
+  timestamp: number;
+}
+
+export interface SessionState {
+  toolId: ToolType;
+  fileName: string;
+  fileSize: number;
+  state: any;
+  updatedAt: number;
 }

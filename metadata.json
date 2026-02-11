@@ -1,5 +1,6 @@
+
 {
-  "name": "fileconverser - All-in-One Document & Image Hub",
-  "description": "A professional-grade, student-friendly platform for document conversion, image resizing, and batch processing.",
+  "name": "LocalPDFly - Privacy-First Local PDF Tools",
+  "description": "Secure, professional PDF toolkit that works entirely in your browser. Merge, split, compress, and edit PDFs with zero cloud uploads—processing happens 100% locally on your device.",
   "requestFramePermissions": []
 }

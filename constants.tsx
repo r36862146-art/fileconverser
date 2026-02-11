@@ -1,108 +1,66 @@
 
 import React from 'react';
-import { 
-  Upload, 
-  Layers, 
-  Settings, 
-  Download, 
-  Zap, 
-  Scaling, 
-  FileText, 
-  // Fix: Lucide-react exports 'Image', aliasing to 'ImageIcon' for project-wide consistency
-  Image as ImageIcon,
-  Maximize,
-  // Fix: AspectRatio is not available in the current lucide-react version; replaced with Monitor for screen-based presets
-  Monitor,
-  Activity,
-  Archive
-} from 'lucide-react';
-import { TourStep } from './types';
+// Fix: Added RotateCw to imports from lucide-react
+import { Merge, Scissors, Minimize2, ArrowDownUp, Edit3, RotateCw } from 'lucide-react';
+import { ToolConfig, ToolType } from './types';
 
-export const SUPPORTED_FORMATS = [
-  { name: 'PDF', icon: '📄', color: 'bg-red-100 text-red-600' },
-  { name: 'DOCX', icon: '📝', color: 'bg-blue-100 text-blue-600' },
-  { name: 'PNG', icon: '🖼️', color: 'bg-green-100 text-green-600' },
-  { name: 'JPG', icon: '📸', color: 'bg-yellow-100 text-yellow-600' },
-  { name: 'WebP', icon: '✨', color: 'bg-purple-100 text-purple-600' },
-];
-
-export const TIPS = [
+// Fix: Added Rotate PDF configuration to the TOOLS array
+export const TOOLS: ToolConfig[] = [
   {
-    title: "Batch Processing",
-    content: "Upload multiple files at once. You can apply settings to one file or convert all of them into a single ZIP archive for easy sharing."
+    id: ToolType.EDITOR,
+    title: 'PDF Editor',
+    description: 'Annotate, add text, watermarks, and manage pages in your PDF.',
+    icon: <Edit3 className="w-6 h-6" />,
+    path: '/pdf-editor',
+    seoTitle: 'Full Online PDF Editor - Free & Private',
+    keywords: ['edit pdf', 'annotate pdf', 'online pdf editor']
   },
   {
-    title: "Browser-Only Processing",
-    content: "Your files never leave your computer. All conversions and resizing happen locally in your browser, ensuring maximum privacy and speed."
+    id: ToolType.MERGE,
+    title: 'Merge PDF',
+    description: 'Combine multiple PDF files into a single document in seconds.',
+    icon: <Merge className="w-6 h-6" />,
+    path: '/merge-pdf',
+    seoTitle: 'Merge PDF Online Free - 100% Private',
+    keywords: ['merge pdf', 'combine pdf', 'pdf joiner']
   },
   {
-    title: "Image Resizing Pro-Tip",
-    content: "When resizing for print, use 300 DPI. For web use, 72 DPI is sufficient and keeps file sizes small."
+    id: ToolType.SPLIT,
+    title: 'Split PDF',
+    description: 'Extract specific pages or ranges from your PDF into new files.',
+    icon: <Scissors className="w-6 h-6" />,
+    path: '/split-pdf',
+    seoTitle: 'Split PDF by Pages - Extract PDF Pages Online',
+    keywords: ['split pdf', 'extract pages', 'separate pdf']
   },
   {
-    title: "Smart Detection",
-    content: "Just drop any file. fileconverser automatically routes documents to the Document Hub and images to the Image Studio."
+    id: ToolType.COMPRESS,
+    title: 'Compress PDF',
+    description: 'Reduce PDF file size without losing quality.',
+    icon: <Minimize2 className="w-6 h-6" />,
+    path: '/compress-pdf',
+    seoTitle: 'Compress PDF File - Reduce PDF Size Local',
+    keywords: ['compress pdf', 'reduce pdf size', 'pdf optimizer']
+  },
+  {
+    id: ToolType.REORDER,
+    title: 'Reorder Pages',
+    description: 'Rearrange pages in your PDF document exactly how you want them.',
+    icon: <ArrowDownUp className="w-6 h-6" />,
+    path: '/reorder-pdf',
+    seoTitle: 'Reorder PDF Pages Online - Move PDF Pages',
+    keywords: ['reorder pdf', 'move pdf pages', 'rearrange pdf']
+  },
+  {
+    id: ToolType.ROTATE,
+    title: 'Rotate PDF',
+    description: 'Rotate PDF pages clockwise and save the changes.',
+    icon: <RotateCw className="w-6 h-6" />,
+    path: '/rotate-pdf',
+    seoTitle: 'Rotate PDF Pages Online - Free & Private',
+    keywords: ['rotate pdf', 'turn pdf', 'pdf orientation']
   }
 ];
 
-export const TOUR_STEPS: TourStep[] = [
-  {
-    title: "Welcome to fileconverser",
-    content: "Your all-in-one local file workshop. No servers, no uploads, just pure speed.",
-    icon: <Zap className="text-primary" size={32} />
-  },
-  {
-    title: "Universal Drop Zone",
-    content: "Drag and drop any file anywhere on the home screen. We'll handle the sorting automatically.",
-    icon: <Upload className="text-blue-500" size={32} />
-  },
-  {
-    title: "Manage Your Queue",
-    content: "Files appear in the sidebar queue. Click a file to customize its specific settings.",
-    icon: <Layers className="text-purple-500" size={32} />
-  },
-  {
-    title: "Precision Controls",
-    content: "Adjust dimensions, formats, and quality. Changes are reflected in the preview in real-time.",
-    icon: <Settings className="text-orange-500" size={32} />
-  },
-  {
-    title: "Instant Export",
-    content: "Download files individually or grab everything at once with our ZIP batch export.",
-    icon: <Download className="text-accent" size={32} />
-  }
-];
-
-export const RESIZE_TOUR_STEPS: TourStep[] = [
-  {
-    title: "Image Resize Studio",
-    content: "Professional precision scaling. Perfect for social media, web assets, and print high-fidelity.",
-    icon: <Scaling className="text-primary" size={32} />
-  },
-  {
-    title: "Asset Management",
-    content: "Your uploaded images appear in the left sidebar. Drag to reorder or click a specific image to modify it.",
-    icon: <Layers className="text-blue-500" size={32} />
-  },
-  {
-    title: "Custom Dimensions",
-    content: "Enter exact Width and Height values. Use the 'Maintain Aspect Ratio' lock to prevent stretching.",
-    icon: <Maximize className="text-purple-500" size={32} />
-  },
-  {
-    title: "One-Click Presets",
-    content: "Use our pre-defined standards for Instagram (Post/Story), HD, and 4K video frames instantly.",
-    // Fix: Using Monitor icon as replacement for AspectRatio
-    icon: <Monitor className="text-orange-500" size={32} />
-  },
-  {
-    title: "The Batch Engine",
-    content: "The 'Resize All' button applies your current settings to every image in your queue simultaneously.",
-    icon: <Activity className="text-green-500" size={32} />
-  },
-  {
-    title: "ZIP Batch Export",
-    content: "Download your entire resized collection as a single, organized ZIP archive.",
-    icon: <Archive className="text-accent" size={32} />
-  }
-];
+export const APP_NAME = "LocalPDFly";
+export const TRUST_CLAIM = "Your documents never leave your browser. All processing is executed locally on your hardware for maximum security and performance.";

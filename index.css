@@ -1,0 +1,5 @@
+/* Basic styles to ensure the build doesn't complain about missing file */
+body {
+  margin: 0;
+  padding: 0;
+}

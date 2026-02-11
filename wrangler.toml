@@ -1,6 +1,7 @@
-name = "fileconverser"
-compatibility_date = "2024-04-01"
+name = "localpdfly"
 pages_build_output_dir = "dist"
+compatibility_date = "2026-02-11"
 
-[vars]
-NODE_VERSION = "20"
+[[r2_buckets]]
+binding = "PDF_BUCKET"
+bucket_name = "localpdfly-temp"
